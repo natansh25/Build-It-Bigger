@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Joke {
 
-    public String MyName = "Natansh Pandya";
+    public String joke = "FunnyJoke !!";
 
 
 }
