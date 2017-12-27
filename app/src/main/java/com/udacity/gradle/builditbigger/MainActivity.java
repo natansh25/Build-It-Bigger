@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.androidjokeslibrary.AndroidLibActivity;
 import com.example.jokes.Joke;
 
 
@@ -46,7 +47,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Intent i=new Intent(MainActivity.this,Android)    }
+        Intent i=new Intent(MainActivity.this, AndroidLibActivity.class);
+        i.putExtra("get",name);
+        startActivity(i);
+
+
+    }
 
 
 }
