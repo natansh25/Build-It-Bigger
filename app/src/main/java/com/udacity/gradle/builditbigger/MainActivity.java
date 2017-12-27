@@ -6,11 +6,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
+import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import com.example.androidjokeslibrary.AndroidLibActivity;
 import com.example.jokes.Joke;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -30,11 +31,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Joke jk = new Joke();
         joke = jk.joke;
+        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
     }
 
 
     class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
-        private static MyApi myApiService = null;
+        private MyApi myApiService = null;
         private Context context;
 
         @Override
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+            Log.i("ttt2",result);
         }
     }
 
