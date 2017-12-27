@@ -28,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Joke jk=new Joke();
-        joke=jk.joke;
+        Joke jk = new Joke();
+        joke = jk.joke;
     }
+
 
     class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
         private static MyApi myApiService = null;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Pair<Context, String>... params) {
-            if(myApiService == null) {  // Only do this once
+            if (myApiService == null) {  // Only do this once
                 MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         // options for running against local devappserver
@@ -73,22 +74,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Intent i=new Intent(MainActivity.this, AndroidLibActivity.class);
-        i.putExtra("get",joke);
+        Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
+        i.putExtra("get", joke);
         startActivity(i);
 
 
