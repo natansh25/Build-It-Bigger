@@ -36,20 +36,9 @@ public class MainActivityFragment extends Fragment {
         mAdView.loadAd(adRequest);
 
 
-
-
-
-        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
-
-
-
         return root;
 
         // retriving the jokes from the java library
-
-
-
-
 
 
     }

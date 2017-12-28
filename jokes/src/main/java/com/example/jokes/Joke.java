@@ -6,7 +6,7 @@ import java.util.List;
 public class Joke {
 
     public static String jokes() {
-        return "Funny Jokes";
+        return "CAPS LOCK – Preventing Login Since 1980. ";
     }
 
     // public String joke = "FunnyJoke !!";
