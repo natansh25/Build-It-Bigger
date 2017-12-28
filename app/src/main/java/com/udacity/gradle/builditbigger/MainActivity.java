@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
@@ -28,11 +29,13 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private String joke;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mProgressBar = findViewById(R.id.progress_bar);
         /*Joke jk = new Joke();
         joke = jk.joke;*/
         //new EndpointsAsyncTask().execute();
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
     class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
         private MyApi myApiService = null;
         private Context context;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -85,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     3000
             );
             //Log.i("ttt2", result);*/
+            mProgressBar.setVisibility(View.INVISIBLE);
 
             Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
             i.putExtra("get", result);
