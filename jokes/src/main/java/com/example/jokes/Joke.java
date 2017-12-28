@@ -5,7 +5,11 @@ import java.util.List;
 
 public class Joke {
 
-    public String joke = "FunnyJoke !!";
+    public static String jokes() {
+        return "Funny Jokes";
+    }
+
+    // public String joke = "FunnyJoke !!";
 
 
 }
