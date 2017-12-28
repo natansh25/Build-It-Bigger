@@ -26,107 +26,107 @@ import com.udacity.gradle.builditbigger.R;
 import java.io.IOException;
 
 
-    public class MainActivity extends AppCompatActivity {
-        private String joke;
-        private ProgressBar mProgressBar;
-        private InterstitialAd mInterstitialAd;
+public class MainActivity extends AppCompatActivity {
+    private String joke;
+    private ProgressBar mProgressBar;
+    private InterstitialAd mInterstitialAd;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            mProgressBar = findViewById(R.id.progress_bar);
-            MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mProgressBar = findViewById(R.id.progress_bar);
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         /*Joke jk = new Joke();
         joke = jk.joke;*/
-            //new EndpointsAsyncTask().execute();
+        //new EndpointsAsyncTask().execute();
+    }
+
+
+    //
+    class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
+        private MyApi myApiService = null;
+        private Context context;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
+        @Override
+        protected String doInBackground(Void... params) {
+            if (myApiService == null) {  // Only do this once
+                MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        // options for running against local devappserver
+                        // - 10.0.2.2 is localhost's IP address in Android emulator
+                        // - turn off compression when running against local devappserver
+                        .setRootUrl("http://10.0.3.2:8080/_ah/api/")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+                // end options for devappserver
 
-        //
-        class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
-            private MyApi myApiService = null;
-            private Context context;
-
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressBar.setVisibility(View.VISIBLE);
+                myApiService = builder.build();
             }
 
-            @Override
-            protected String doInBackground(Void... params) {
-                if (myApiService == null) {  // Only do this once
-                    MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
-                            new AndroidJsonFactory(), null)
-                            // options for running against local devappserver
-                            // - 10.0.2.2 is localhost's IP address in Android emulator
-                            // - turn off compression when running against local devappserver
-                            .setRootUrl("http://10.0.3.2:8080/_ah/api/")
-                            .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                                @Override
-                                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                                    abstractGoogleClientRequest.setDisableGZipContent(true);
-                                }
-                            });
-                    // end options for devappserver
-
-                    myApiService = builder.build();
-                }
-
-                try {
-                    Log.i("ttt31", myApiService.getJokes().execute().getData());
-                    return myApiService.getJokes().execute().getData();
-                } catch (IOException e) {
-                    return e.getMessage();
-                }
+            try {
+                Log.i("ttt31", myApiService.getJokes().execute().getData());
+                return myApiService.getJokes().execute().getData();
+            } catch (IOException e) {
+                return e.getMessage();
             }
+        }
 
-            @Override
-            protected void onPostExecute(final String result) {
+        @Override
+        protected void onPostExecute(final String result) {
 
-                mProgressBar.setVisibility(View.INVISIBLE);
+            mProgressBar.setVisibility(View.INVISIBLE);
 
-                mInterstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        // Code to be executed when an ad finishes loading.
-                        mInterstitialAd.show();
-                    }
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    // Code to be executed when an ad finishes loading.
+                    mInterstitialAd.show();
+                }
 
-                    @Override
-                    public void onAdFailedToLoad(int errorCode) {
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
 
-                        Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
-                        i.putExtra("get", result);
-                        startActivity(i);
-                        // Code to be executed when an ad request fails.
-                    }
+                    Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
+                    i.putExtra("get", result);
+                    startActivity(i);
+                    // Code to be executed when an ad request fails.
+                }
 
-                    @Override
-                    public void onAdOpened() { 
-                        // Code to be executed when the ad is displayed.
-                    }
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when the ad is displayed.
+                }
 
-                    @Override
-                    public void onAdLeftApplication() {
-                        // Code to be executed when the user has left the app.
-                    }
+                @Override
+                public void onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
 
-                    @Override
-                    public void onAdClosed() {
+                @Override
+                public void onAdClosed() {
 
-                        Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
-                        i.putExtra("get", result);
-                        startActivity(i);
-                        // Code to be executed when when the interstitial ad is closed.
-                    }
-                });
+                    Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
+                    i.putExtra("get", result);
+                    startActivity(i);
+                    // Code to be executed when when the interstitial ad is closed.
+                }
+            });
 
             /*new Timer().schedule(
                     new TimerTask() {
@@ -140,41 +140,40 @@ import java.io.IOException;
             //Log.i("ttt2", result);*/
 
 
-
-            }
         }
+    }
 
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_main, menu);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
             return true;
         }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
+    }
 
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
-                return true;
-            }
+    public void tellJoke(View view) {
 
-            return super.onOptionsItemSelected(item);
-        }
+        mInterstitialAd.show();
 
-        public void tellJoke(View view) {
-
-            mInterstitialAd.show();
-
-            new EndpointsAsyncTask().execute();
-
-
-        }
+        new EndpointsAsyncTask().execute();
 
 
     }
+
+
+}
