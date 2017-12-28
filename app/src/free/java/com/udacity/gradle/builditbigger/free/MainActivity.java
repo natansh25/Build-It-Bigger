@@ -109,7 +109,7 @@ import java.io.IOException;
                     }
 
                     @Override
-                    public void onAdOpened() {
+                    public void onAdOpened() { 
                         // Code to be executed when the ad is displayed.
                     }
 
