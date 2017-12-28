@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -89,6 +90,44 @@ import java.io.IOException;
             @Override
             protected void onPostExecute(final String result) {
 
+                mProgressBar.setVisibility(View.INVISIBLE);
+
+                mInterstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        // Code to be executed when an ad finishes loading.
+                        mInterstitialAd.show();
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+
+                        Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
+                        i.putExtra("get", result);
+                        startActivity(i);
+                        // Code to be executed when an ad request fails.
+                    }
+
+                    @Override
+                    public void onAdOpened() {
+                        // Code to be executed when the ad is displayed.
+                    }
+
+                    @Override
+                    public void onAdLeftApplication() {
+                        // Code to be executed when the user has left the app.
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+
+                        Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
+                        i.putExtra("get", result);
+                        startActivity(i);
+                        // Code to be executed when when the interstitial ad is closed.
+                    }
+                });
+
             /*new Timer().schedule(
                     new TimerTask() {
                         @Override
@@ -99,11 +138,9 @@ import java.io.IOException;
                     3000
             );
             //Log.i("ttt2", result);*/
-                mProgressBar.setVisibility(View.INVISIBLE);
 
-                Intent i = new Intent(MainActivity.this, AndroidLibActivity.class);
-                i.putExtra("get", result);
-                startActivity(i);
+
+
             }
         }
 
