@@ -9,6 +9,8 @@ import android.content.Context;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,11 +22,11 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class AsyncTest{
+public class AsyncTest {
     @Test
-    public void test(){
-        String string=null;
-        MyAsyncTask task=new MyAsyncTask(getTargetContext());
+    public void test() {
+        String string = null;
+        MyAsyncTask task = new MyAsyncTask(getTargetContext());
         task.execute();
 
         try {
@@ -34,6 +36,7 @@ public class AsyncTest{
             fail("Time out");
         }
 
-        assertNotNull(string);
+        Assert.assertTrue(string.length() > 0 && !string.contains("failed"));
+
     }
 }
