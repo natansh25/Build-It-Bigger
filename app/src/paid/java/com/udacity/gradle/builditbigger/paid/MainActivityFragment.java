@@ -9,8 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.jokes.Joke;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import com.udacity.gradle.builditbigger.R;
 
 
@@ -25,7 +24,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
 
         // Create an ad request. Check logcat output for the hashed device ID to
