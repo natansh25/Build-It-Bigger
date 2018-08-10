@@ -1,4 +1,6 @@
-# Gradle for Android and Java Final Project
+Build It Bigger App created as a part of Udacity [Android Developer Nanodegree Program](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801).
+
+## Gradle for Android and Java Final Project
 
 In this project, you will create an app with multiple flavors that uses
 multiple libraries and Google Cloud Endpoints. The finished app will consist
@@ -6,6 +8,8 @@ of four modules. A Java library that provides jokes, a Google Cloud Endpoints
 (GCE) project that serves those jokes, an Android Library containing an
 activity for displaying jokes, and an Android app that fetches jokes from the
 GCE module and passes them to the Android Library for display.
+
+![Screen](https://lh3.googleusercontent.com/cJQtO_A08shKWZ1NEJxpvdYcfXxoHH87HYldIx_gOoGcoqnnZDTP3ycVqAnZSUMYzHygxhb-nEE_Yv_QmZY=s0)
 
 ## Why this Project
 
@@ -41,9 +45,6 @@ https://developers.google.com/mobile-ads-sdk/docs/admob/android/quick-start
 You may need to download the Google Repository from the Extras section of the
 Android SDK Manager.
 
-You will also notice a folder called backend in the starter code. 
-It will be used in step 3 below, and you do not need to worry about it for now.
-
 When you can build an deploy this starter code to an emulator, you're ready to
 move on.
 
@@ -72,12 +73,8 @@ http://developer.android.com/guide/components/intents-filters.html
 
 This next task will be pretty tricky. Instead of pulling jokes directly from
 our Java library, we'll set up a Google Cloud Endpoints development server,
-and pull our jokes from there. 
-
-The following tutorial explains how to add and use a Google Cloud Endpoints module in 
-your project. The starter code already includes the module in the folder called backend.
-Therefore, you can skip the creation steps in the tutorial and start at section
-1.1 *Debugging the backend locally*:
+and pull our jokes from there. Follow the instructions in the following
+tutorial to add a Google Could Endpoints module to your project:
 
 https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloEndpoints
 
@@ -127,20 +124,20 @@ To tie it all together, create a Gradle task that:
 
 ### Required Components
 
-* Project contains a Java library for supplying jokes
-* Project contains an Android library with an activity that displays jokes passed to it as intent extras.
-* Project contains a Google Cloud Endpoints module that supplies jokes from the Java library. Project loads jokes from GCE module via an async task.
-* Project contains connected tests to verify that the async task is indeed loading jokes.
-* Project contains paid/free flavors. The paid flavor has no ads, and no unnecessary dependencies.
+- [x] Project contains a Java library for supplying jokes
+- [X] Project contains an Android library with an activity that displays jokes passed to it as intent extras.
+- [x] Project contains a Google Cloud Endpoints module that supplies jokes from the Java library. Project loads jokes from GCE module via an async task.
+- [x] Project contains connected tests to verify that the async task is indeed loading jokes.
+- [x] Project contains paid/free flavors. The paid flavor has no ads, and no unnecessary dependencies.
 
 ### Required Behavior
 
-* App retrieves jokes from Google Cloud Endpoints module and displays them via an Activity from the Android Library.
+- [x] App retrieves jokes from Google Cloud Endpoints module and displays them via an Activity from the Android Library.
 
 ### Optional Components
 
 Once you have a functioning project, consider adding more features to test your Gradle and Android skills. Here are a few suggestions:
 
-* Make the free app variant display interstitial ads between the main activity and the joke-displaying activity.
-* Have the app display a loading indicator while the joke is being fetched from the server.
-* Write a Gradle task that starts the GCE dev server, runs all the Android tests, and shuts down the dev server.
+- [x] Make the free app variant display interstitial ads between the main activity and the joke-displaying activity.
+- [x] Have the app display a loading indicator while the joke is being fetched from the server.
+- [x] Write a Gradle task that starts the GCE dev server, runs all the Android tests, and shuts down the dev server.
